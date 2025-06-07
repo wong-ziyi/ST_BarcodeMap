@@ -34,7 +34,7 @@ jobs:
       - name: Rename binary with version
         run: |
           mkdir -p dist
-          cp ST_BarcodeMap-0.0.1 dist/ST_BarcodeMap-${{ github.ref_name }}-linux
+          cp ST_BarcodeMap dist/ST_BarcodeMap-${{ github.ref_name }}-linux
           chmod +x dist/ST_BarcodeMap-${{ github.ref_name }}-linux
 
       - name: Upload binary to GitHub Release
