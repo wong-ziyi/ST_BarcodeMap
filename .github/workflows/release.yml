@@ -1,0 +1,51 @@
+name: Build and Release ST_BarcodeMap
+
+on:
+  push:
+    tags:
+      - 'v*'  # Triggers on version tags like v0.0.1
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-update-conda: true
+          environment-file: environment.yml
+          activate-environment: barcodeenv
+          python-version: 3.9
+
+      - name: Install C++ dependencies
+        shell: bash -l {0}
+        run: |
+          mamba install -c conda-forge gcc_linux-64 gxx_linux-64
+          export CC=$(which x86_64-conda-linux-gnu-gcc)
+          export CXX=$(which x86_64-conda-linux-gnu-g++)
+          echo "Using CC=$CC"
+          echo "Using CXX=$CXX"
+          make
+
+      - name: Rename binary with version
+        run: |
+          mkdir -p dist
+          cp ST_BarcodeMap-0.0.1 dist/ST_BarcodeMap-${{ github.ref_name }}-linux
+          chmod +x dist/ST_BarcodeMap-${{ github.ref_name }}-linux
+
+      - name: Upload binary to GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Release ${{ github.ref_name }}
+          tag_name: ${{ github.ref_name }}
+          files: dist/ST_BarcodeMap-${{ github.ref_name }}-linux
+          body: |
+            🔁 Automated release for **${{ github.ref_name }}**
+            🐧 Platform: **Linux**
+            📦 Binary: `ST_BarcodeMap-${{ github.ref_name }}-linux`
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
