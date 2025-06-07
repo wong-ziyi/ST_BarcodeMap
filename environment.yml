@@ -1,0 +1,11 @@
+name: barcodeenv
+channels:
+  - conda-forge
+dependencies:
+  - boost=1.73
+  - hdf5=1.10.7
+  - zlib=1.2.11
+  - gcc_linux-64
+  - gxx_linux-64
+  - make
+  - mamba
