@@ -13,9 +13,24 @@ This program can map barcode of stereomics-seq to stereomics-chip
 | zlib          | >=1.2.11 | file compressing and decompressing                         |
 | hdf5          | >=1.10.7 | hdf5 format mask file read                                 |
 
+## Using conda
+If the conda is not set up yet, please install conda first, following the link below:
+[https://www.anaconda.com/docs/getting-started/miniconda/install#macos-linux-installation](https://www.anaconda.com/docs/getting-started/miniconda/install#macos-linux-installation)
+
+To meet the above prerequisites, a conda environment can be created as shown below:
+```bash
+conda install mamba -n base -c conda-forge
+mamba create -n barcodeenv boost=1.73 hdf5=1.10.7 zlib=1.2.11 -c conda-forge
+conda activate barcodeenv
+mamba install -c conda-forge gcc_linux-64 gxx_linux-64
+mamba install -c conda-forge boost=1.73
+```
+
 ## make the runnable program
 ```
 ##add the requested packages in your environment value or specify their path in Makefile by INCLUDE_DIRS and LIBRARY_DIRS
+conda activate barcodeenv
+export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH
 
 cd ST_BarcodeMap
 make
