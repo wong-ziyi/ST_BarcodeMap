@@ -1,0 +1,5 @@
+- name: Upload release artifact
+  uses: actions/upload-artifact@v4
+  with:
+    name: ST_BarcodeMap-0.0.1
+    path: /bin/ST_BarcodeMap-0.0.1
