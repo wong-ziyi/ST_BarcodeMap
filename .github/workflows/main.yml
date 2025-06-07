@@ -1,3 +1,4 @@
+- uses: actions/checkout@v4
 - name: Upload release artifact
   uses: actions/upload-artifact@v4
   with:
