@@ -12,7 +12,7 @@ LIBRARY_DIRS = -L$(CONDA_PREFIX)/lib -L/usr/lib/x86_64-linux-gnu/hdf5/serial
 SRC := $(wildcard ${DIR_SRC}/*.cpp)
 OBJ := $(patsubst %.cpp,${DIR_OBJ}/%.o,$(notdir ${SRC}))
 
-TARGET := ST_BarcodeMap-0.0.1
+TARGET := ST_BarcodeMap
 BIN_TARGET := ${TARGET}
 
 CXX := g++
